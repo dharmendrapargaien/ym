@@ -11,10 +11,20 @@
 |
 */
 
-Route::group(['middleware' => ['web']], function () {
 
-    Route::get('/', function () {
-        return view('welcome');
-    });
+Route::group(['namespace' => 'Api\V1', 'prefix' => 'api/v1', 'middleware'], function () {
 
+	Route::post('authenticate', 'AuthController@authenticate');
+	Route::post('signup', 'AuthController@signup');
+	Route::post('forgot-password', 'AuthController@forgotPassword');
+	Route::get('activate/{confirmation_code}', 'AuthController@activate');
+
+	Route::group(['middleware' => ['']], function () {
+
+	});
+});
+
+Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Admin'], function () {
+
+	Route::get('users', ['as' => 'users.index', 'uses' => 'UserController@index']);
 });
