@@ -13,9 +13,10 @@
 
 $factory->define(App\Models\User::class, function (Faker\Generator $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->safeEmail,
-        'password' => bcrypt(str_random(10)),
-        'remember_token' => str_random(10),
+		'name'           => $faker->name,
+		'email'          => $faker->safeEmail,
+		'phone_no'       => $faker->numberBetween($min = 1000000000, $max = 9999999999),
+		'password'       => bcrypt(str_random(10)),
+		'remember_token' => str_random(10),
     ];
 });

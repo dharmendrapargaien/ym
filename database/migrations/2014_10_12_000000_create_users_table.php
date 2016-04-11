@@ -17,7 +17,19 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('phone_no',10)->unique();
+            $table->tinyInteger('gender')->default(1);//1 = M, 2 = F, 3 = Ohter 
+            $table->string('address',255)->nullable();
+            $table->string('city',50)->nullable();
+            $table->integer('state_id')->nullable();
+            $table->integer('country_id')->nullable();
+            $table->integer('zip_code')->nullable();
+            $table->string('last_login_ip',50)->nullable();
+            $table->tinyInteger('user_type')->default(1);//1 = B, 2 = S
+            $table->string('avatar',500)->default('default-m-avatar.png');
+            $table->tinyInteger('status')->default(0);//created but not active
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

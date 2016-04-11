@@ -38,15 +38,12 @@ class AuthController extends BaseController
 	{
 		
 		// //request for oauth authorization
-  //       $authorizer = Authorizer::issueAccessToken();
+        $authorizer = Authorizer::issueAccessToken();
 
-  //       // We have an API key. Now we need to return that.
-  //       $resource = new \App\Fractal\Item($authorizer, new AuthenticateTransformer);
+        // We have an API key. Now we need to return that.
+        $resource = new \App\Fractal\Item($authorizer, new AuthenticateTransformer);
         
-        $users = $this->userModel->all();
-        $resource = new \App\Fractal\Collection($users, new UserTransformer);
-		
-		return response()->json($resource->getSuccess());
+        return response()->json($resource->getSuccess(), 200);
     }
 
 	/**
@@ -62,7 +59,7 @@ class AuthController extends BaseController
 			return false;
 		}
 
-		\Auth::loginUsingId($user->id);
+		Auth::loginUsingId($user->id);
 
 		return true;
 	}

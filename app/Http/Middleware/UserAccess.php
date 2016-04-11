@@ -22,12 +22,12 @@ class UserAccess
         } 
         
         //fetching the user id according to access token
-        $token = $request->get('access_token');
+        $token             = $request->get('access_token');
         $oauthAccessTokens = \DB::table('oauth_access_tokens');
-        $oauthSessions = \DB::table('oauth_sessions');
+        $oauthSessions     = \DB::table('oauth_sessions');
 
         $session_id = $oauthAccessTokens->whereId($token)->first()->session_id;
-        $user_id = $oauthSessions->whereId($session_id)->first()->owner_id;
+        $user_id    = $oauthSessions->whereId($session_id)->first()->owner_id;
 
         //if access token do not match the un authorizing
         if($user_id != $request->get('user_id'))

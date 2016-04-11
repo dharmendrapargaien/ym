@@ -12,9 +12,11 @@ class UsersTableSeeder extends Seeder
     public function run()
     {
         DB::table('users')->insert([
-    		'email' => 'david.dharmendra@ithands.net',
-	        'password' => bcrypt('admin'),
-	        'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'name'       => 'david dharmendra',
+            'email'      => 'david.dharmendra@ithands.net',
+            'password'   => bcrypt('admin'),
+            'phone_no'   => '9876543210',
+            'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
     	]);
 

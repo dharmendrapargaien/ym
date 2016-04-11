@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use League\OAuth2\Server\Exception\InvalidRequestException;
+use League\OAuth2\Server\Exception\InvalidCredentialsException;
 
 class Handler extends ExceptionHandler
 {
@@ -51,33 +52,40 @@ class Handler extends ExceptionHandler
     */
    public function render($request, Exception $e)
    {
-       // if($e instanceof TokenMismatchException)
-       //     return $this->handleTokenMismatch();
+      // if($e instanceof TokenMismatchException)
+      //     return $this->handleTokenMismatch();
 
-           return parent::render($request, $e);
-       if($e instanceof HttpResponseException)
-           return parent::render($request, $e);
+        return parent::render($request, $e);
+      if($e instanceof HttpResponseException)
+        return parent::render($request, $e);
+        
+      if($e instanceof ValidationException)
+        return parent::render($request, $e);
 
-       if($e instanceof ValidationException)
-           return parent::render($request, $e);
+      if ($e instanceof ModelNotFoundException) {
+        
+        return $this->setRender($request, $e, 404,  ['error' => 'Application not found']);
+      }
 
-       if ($e instanceof ModelNotFoundException) {
-           return $this->setRender($request, $e, 404,  ['error' => 'Application not found']);
-       }
+      if($e instanceof NotFoundHttpException) {
+        
+        return $this->setRender($request, $e, 404,  ['error' => 'Page not found']);
+      }
 
-       if($e instanceof NotFoundHttpException){
-           return $this->setRender($request, $e, 404,  ['error' => 'Page not found']);
-       }
+      if($e instanceof InvalidRequestException) {
 
-       if($e instanceof InvalidRequestException){
-            return $this->setRender($request, $e, 400, ['error' => 'Please provide password and email']);
-       }
+        return $this->setRender($request, $e, 400, ['error' => 'Please provide password and email']);
+      }
 
-       // if ($e instanceof UnauthorizedException) {
-       //     return $this->setRender($request, $e, 401,  ['error' => 'You are not authorized']);
-       // }
-       
-       return $this->setRender($request, $e);
+      if($e instanceof InvalidCredentialsException) {
+        
+        return $this->setRender($request, $e, 401, ['error' => 'Please enter a valid credentials.']);
+      }
+      // if ($e instanceof UnauthorizedException) {
+      //     return $this->setRender($request, $e, 401,  ['error' => 'You are not authorized']);
+      // }
+
+      return $this->setRender($request, $e);
    }
 
    /**
