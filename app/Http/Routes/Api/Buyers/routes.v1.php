@@ -2,7 +2,7 @@
 
 /*
 |--------------------------------------------------------------------------
-| Application Routes
+| Api Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register all of the routes for an application.
@@ -11,7 +11,15 @@
 |
 */
 
-Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Seller', 'prefix' => 'seller'], function () {
+Route::get('test', function(){
+	return 'test buyer okay';
+});
 
-	Route::get('sellers', ['as' => 'sellers.index', 'uses' => 'SellerController@index']);
+Route::post('authenticate', 'AuthController@authenticate');
+Route::post('signup', 'AuthController@signup');
+Route::post('forgot-password', 'AuthController@forgotPassword');
+Route::get('activate/{confirmation_code}', 'AuthController@activate');
+
+Route::group(['middleware' => []], function () {
+
 });

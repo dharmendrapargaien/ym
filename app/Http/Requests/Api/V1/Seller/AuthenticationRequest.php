@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\User;
+namespace App\Http\Requests\Api\V1\Seller;
 
 class AuthenticationRequest extends \App\Http\Requests\Request
 { 
@@ -24,9 +24,9 @@ class AuthenticationRequest extends \App\Http\Requests\Request
 
         if (request()->has('email') && (is_numeric(request()->get('email')))) {
 
-            $this->rules['email'] = 'required|exists:users,phone_no';
+            $this->rules['email'] = 'required|exists:sellers,phone_no';
         } else {
-            $this->rules['email'] = 'required|email|exists:users,email';
+            $this->rules['email'] = 'required|email|exists:sellers,email';
         }
         
         return $this->rules;

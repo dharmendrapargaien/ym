@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSellersTable extends Migration
+class CreateBuyersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -12,7 +12,7 @@ class CreateSellersTable extends Migration
      */
     public function up()
     {
-        Schema::create('sellers', function(Blueprint $table) {
+        Schema::create('buyers', function(Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->string('email')->unique();
@@ -27,8 +27,7 @@ class CreateSellersTable extends Migration
             $table->string('last_login_ip',50)->nullable();
             $table->tinyInteger('gender')->default(1);//1 = M, 2 = F, 3 = Ohter 
             $table->string('avatar',500)->default('default-m-avatar.png');
-            $table->tinyInteger('seller_type')->default(0);
-            $table->string('confirmation_code', 10)->nullabe();
+            $table->tinyInteger('buyer_type')->default(0);
             $table->tinyInteger('status')->default(0);//created but not active
             $table->rememberToken();
             $table->softDeletes();
@@ -43,6 +42,6 @@ class CreateSellersTable extends Migration
      */
     public function down()
     {
-        Schema::drop('sellers');
+        Schema::drop('buyers');
     }
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\User;
+namespace App\Http\Requests\Api\V1\Seller;
 
 class SignUpRequest extends \App\Http\Requests\Request
 {
@@ -9,10 +9,10 @@ class SignUpRequest extends \App\Http\Requests\Request
      * @var array
      */
     public $rules = [
-        'email' => 'required|email|unique:users,email',
-        'password' => 'required_without:facebook_id',
-        'username' => 'required|unique:users,username',
-        'facebook_id' => 'unique:users,facebook_id'
+        'name'     => 'required|max:50',
+        'email'    => 'required|email|max:255|unique:sellers,email',
+        'password' => 'required',
+        'phone_no' => 'required|unique:sellers,phone_no',
     ];
 
     /**

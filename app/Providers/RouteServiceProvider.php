@@ -16,6 +16,8 @@ class RouteServiceProvider extends ServiceProvider
      */
     protected $namespace = 'App\Http\Controllers';
 
+    protected $apiNamespace = 'App\Http\Controllers\Api';
+
     /**
      * Define your route model bindings, pattern filters, etc.
      *
@@ -37,8 +39,44 @@ class RouteServiceProvider extends ServiceProvider
      */
     public function map(Router $router)
     {
+        
+        /*
+        |--------------------------------------------------------------------------
+        | Web Router 
+        |--------------------------------------------------------------------------
+        */
         $router->group(['namespace' => $this->namespace], function ($router) {
+
             require app_path('Http/routes.php');
         });
+
+        
+
+        /*
+        |--------------------------------------------------------------------------
+        | Api Router 
+        |--------------------------------------------------------------------------
+        */
+
+        $router->group(['namespace' => $this->apiNamespace, 'prefix' => 'api'], function ($router) {
+
+            $router->group(['namespace' => 'Seller', 'prefix' => 'seller'], function ($router) {
+
+                $router->group(['namespace' => 'V1', 'prefix' => 'v1'], function ($router) {
+            
+                    require app_path('Http/Routes/Api/Sellers/routes.v1.php');
+                });
+            
+            });
+
+            $router->group(['namespace' => 'Buyer', 'prefix' => 'buyer'], function ($router) {
+            
+                $router->group(['namespace' => 'V1', 'prefix' => 'v1'], function ($router) {
+            
+                    require app_path('Http/Routes/Api/Buyers/routes.v1.php');
+                });
+            });
+        });
+
     }
 }

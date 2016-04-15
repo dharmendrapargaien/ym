@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Api\User;
+namespace App\Http\Requests\Api\V1\Seller;
 
 class ForgotPasswordRequest extends \App\Http\Requests\Request
 {
@@ -9,7 +9,7 @@ class ForgotPasswordRequest extends \App\Http\Requests\Request
      * @var array
      */
     public $rules = [
-        'email' => 'required|email|exists:users',
+        'email' => 'required|email|exists:sellers',
     ];
 
     /**

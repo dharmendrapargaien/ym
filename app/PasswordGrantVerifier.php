@@ -1,29 +1,56 @@
 <?php
 namespace App;
 
-use Illuminate\Support\Facades\Auth;
+use app\Models\Seller;
+use app\Models\Buyer;
 
 class PasswordGrantVerifier
 {
   public function verify($email, $password)
   {
+    //get service for
+    $api_type = \Request::segment(2);
+    
+    switch ($api_type) {
+
+      case 'seller': //if api id for seller
+        
+        $user = Seller::where(function($query) use($email){
+          if(is_numeric($email)){
+
+            $query->wherePhoneNo($email);
+          } else { //if api id for buyer
+
+            $query->whereEmail($email);
+          }
+        })->whereStatus(1)->firstOrFail();
+        
+        break;
       
-      $credentials['password'] = $password;
+      case 'buyer':
 
-      //checking wheather it is a email or password
-      if(is_numeric($email)){
+        $user = Buyer::where(function($query) use($email){
+          if(is_numeric($email)){
 
-        $credentials['phone_no'] = $email;
-      } else {
+            $query->wherePhoneNo($email);
+          } else { //if api id for buyer
 
-        $credentials['email'] = $email;
-      }
+            $query->whereEmail($email);
+          }
+        })->whereStatus(1)->firstOrFail();
+        break;
+      
+      default:
+          return false;
+        break;
+    }
 
-      if (Auth::once($credentials)) {
+    if (\Hash::check($password, $user->password)) {
 
-        return Auth::user()->id;
-      }
-      return false;
+      return $user->id;
+    }
+    
+    return false;
   }
 }
 ?>

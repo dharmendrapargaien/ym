@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Api\V1;
+namespace App\Http\Controllers\Api\Buyer\V1;
 
 use Mail;
 use App\Models\User;
@@ -11,6 +11,7 @@ use App\Transformers\UserTransformer;
 use App\Http\Requests\Api\User\SignUpRequest;
 use App\Http\Requests\Api\User\AuthenticationRequest;
 use App\Http\Requests\Api\User\ForgotPasswordRequest;
+
 use Authorizer, Auth;
 
 use League\Fractal;
@@ -97,12 +98,15 @@ class AuthController extends BaseController
 		\DB::beginTransaction();
 
 		$email = $request->email;
-		$user = $this->userModel->whereEmail($email)->first();
+		$user  = $this->userModel->whereEmail($email)->first();
 
 		$this->sendTemporaryPassword($user);
 
 		\DB::commit();
-		return $this->response->withItem($user, new UserTransformer);
+	
+		// We have an API key. Now we need to return that.
+        $resource = new \App\Fractal\Item($user, new UserTransformer);
+        return response()->json($resource->getSuccess(), 200);
 	}
 
 	/**
@@ -112,14 +116,14 @@ class AuthController extends BaseController
 	 */
 	public function sendTemporaryPassword($user)
 	{
-		$chars = "abcdefghjkmnpqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#&";
+		$chars    = "abcdefghjkmnpqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#&";
 		$password = substr( str_shuffle( $chars ), 0, 6 );
 
 		$user->temporary_password = $password;
 		$user->save();
 
     	return Mail::send('auth.emails.temporary_password', ['user' => $user], function ($m) use ($user) {
-    		$m->to($user->email, $user->name)->subject('Bump App Password');
+    		$m->to($user->email, $user->name)->subject('Test Api Password');
     	});
 	}
 
@@ -148,12 +152,18 @@ class AuthController extends BaseController
 	public function activate($confirmation_code)
 	{
 		if (!$confirmation_code) {
-			return $this->response->errorWrongArgs("Invalid confirmation code");
+			
+			return response()->json([
+				'confirmation_code' => 'Invalid confirmation code'
+			], 400);
 		}
+		
 		$user = $this->userModel->whereConfirmationCode($confirmation_code)->first();
 
 		if (!$user) {
-			return $this->response->errorUnauthorized('Wrong confirmation code');
+			return response()->json([
+				'confirmation_code' => 'Wrong confirmation code'
+			], 401);
 		}
 
 		$user->confirmed = 1;
