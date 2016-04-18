@@ -3,9 +3,13 @@
 namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Seller extends Authenticatable
 {
+    use PimpableTtaiy;
+    use SoftDeletes;
+
 	/**
      * The attributes that are mass assignable.
      *
@@ -20,7 +24,23 @@ class Seller extends Authenticatable
     */
     protected $hidden = ['password', 'remember_token'];
 	
-	protected $dates = ['created_at', 'updated_at'];
+
+    /**
+     * The attributes that should be mutated to dates.
+     *
+     * @var array
+     */
+	protected $dates = ['deleted_at', 'created_at', 'updated_at'];
+
+
+    /**
+     * The businesses that belong to the seller.
+     */
+    public function businesses()
+    {
+
+        return $this->belongsToMany('App\Business');
+    }
 
     /**
      * get seller data

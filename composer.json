@@ -9,7 +9,8 @@
         "laravel/framework": "5.2.*",
         "acacha/admin-lte-template-laravel": "^2.0",
         "lucadegasperi/oauth2-server-laravel": "5.1.*",
-        "league/fractal": "^0.13.0"
+        "league/fractal": "^0.13.0",
+        "jedrzej/pimpable": "0.0.4"
     },
     "require-dev": {
         "fzaninotto/faker": "~1.4",

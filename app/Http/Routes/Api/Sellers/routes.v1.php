@@ -16,6 +16,6 @@ Route::post('signup', 'AuthController@signup');
 Route::post('forgot-password', 'AuthController@forgotPassword');
 Route::post('activate', 'AuthController@activate');
 
-Route::group(['middleware' => []], function () {
+Route::group(['middleware' => ['userAccess']], function () {
 
 });

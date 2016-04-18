@@ -55,24 +55,6 @@ class AuthController extends BaseController
     }
 
 	/**
-	 * Log in a seller by temporary password
-	 * @param  array $credentials [Original credentials supplied]
-	 * @return boolean
-	 */
-	public function loginUsingTemporaryPassword($credentials)
-	{
-		$seller = $this->sellerModel->whereEmail($credentials['email'])->whereTemporaryPassword($credentials['password'])->first();
-
-		if (is_null($seller)) {
-			return false;
-		}
-
-		Auth::loginUsingId($seller->id);
-
-		return true;
-	}
-
-	/**
 	 * Sends a temporary password to seller
 	 * @param  ForgotPasswordRequest $request
 	 * @return json
