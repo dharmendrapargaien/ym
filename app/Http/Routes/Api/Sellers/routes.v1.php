@@ -16,6 +16,11 @@ Route::post('signup', 'AuthController@signup');
 Route::post('forgot-password', 'AuthController@forgotPassword');
 Route::post('activate', 'AuthController@activate');
 
+Route::post('access_token', function() {
+
+	return response()->json(Authorizer::issueAccessToken());
+});
+
 Route::group(['middleware' => ['userAccess']], function () {
 
 });

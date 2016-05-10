@@ -55,7 +55,7 @@ class Handler extends ExceptionHandler
       // if($e instanceof TokenMismatchException)
       //     return $this->handleTokenMismatch();
 
-        return parent::render($request, $e);
+      return parent::render($request, $e);
       if($e instanceof HttpResponseException)
         return parent::render($request, $e);
         

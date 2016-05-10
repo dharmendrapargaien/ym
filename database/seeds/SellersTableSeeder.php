@@ -16,6 +16,7 @@ class SellersTableSeeder extends Seeder
             'email'      => 'david.dharmendra@ithands.net',
             'password'   => bcrypt('admin'),
             'phone_no'   => '9876543210',
+            'status'     => 1,
             'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
             'updated_at' => \Carbon\Carbon::now()->toDateTimeString(),
     	]);

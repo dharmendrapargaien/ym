@@ -11,9 +11,6 @@
 |
 */
 
-Route::get('test', function(){
-	return 'test buyer okay';
-});
 
 Route::post('authenticate', 'AuthController@authenticate');
 Route::post('signup', 'AuthController@signup');

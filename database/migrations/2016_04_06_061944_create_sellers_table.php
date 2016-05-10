@@ -17,7 +17,7 @@ class CreateSellersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->string('temporary_password', 10)->nullable();
+            $table->string('temporary_password', 255)->nullable();
             $table->string('phone_no',12)->unique();
             $table->string('address',255)->nullable();
             $table->string('city',50)->nullable();

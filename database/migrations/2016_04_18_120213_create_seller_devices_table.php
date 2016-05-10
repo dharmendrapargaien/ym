@@ -12,7 +12,7 @@ class CreateSellerDevicesTable extends Migration
      */
     public function up()
     {
-        Schema::create('seller_devices', function(Blueprint $table)
+        Schema::create('seller_devices', function (Blueprint $table)
         {
             $table->increments('id');
 

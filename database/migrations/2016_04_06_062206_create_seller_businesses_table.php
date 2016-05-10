@@ -13,9 +13,9 @@ class CreateSellerBusinessesTable extends Migration
     public function up()
     {
 
-        Schema::create('seller_businesses', function(Blueprint $table){
+        Schema::create('seller_businesses', function (Blueprint $table){
             
-            $table->increment('id');
+            $table->increments('id');
 
             $table->integer('seller_id')->unsigned();
             $table->foreign('seller_id')->references('id')->on('sellers');

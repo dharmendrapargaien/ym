@@ -15,7 +15,7 @@ class CreateSellerBusinessAdvertisesTable extends Migration
 
         Schema::create('seller_business_advertises', function(Blueprint $table){
             
-            $table->increment('id');
+            $table->increments('id');
 
             $table->integer('seller_business_id')->unsigned();
             $table->foreign('seller_business_id')->references('id')->on('seller_businesses');

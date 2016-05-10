@@ -28,4 +28,42 @@ class Buyer extends Authenticatable
     protected $dates = ['deleted_at', 'created_at', 'updated_at'];
 
 
+    /**
+     * get seller data
+     * @param  string $email
+     * @return 
+     */
+    public function getBuyerData($email)
+    {
+        return $this->where(function($query) use($email){
+            
+            if (is_numeric($email)) {
+
+                $query->wherePhoneNo($email);
+            } else {
+
+                $query->whereEmail($email);
+            }
+        })->first();
+    }
+
+    /**
+     * get seller data
+     * @param  string $email
+     * @return 
+     */
+    public function getBuyerConfirmationData($email, $confiration_code)
+    {
+        return $this->where(function($query) use($email){
+            
+            if (is_numeric($email)) {
+
+                $query->wherePhoneNo($email);
+            } else {
+
+                $query->whereEmail($email);
+            }
+        })->whereConfirmationCode($confiration_code)->first();
+    }
+
 }

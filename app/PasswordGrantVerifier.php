@@ -28,7 +28,6 @@ class PasswordGrantVerifier
         break;
       
       case 'buyer':
-
         $user = Buyer::where(function($query) use($email){
           if(is_numeric($email)){
 
@@ -38,6 +37,7 @@ class PasswordGrantVerifier
             $query->whereEmail($email);
           }
         })->whereStatus(1)->firstOrFail();
+
         break;
       
       default:
@@ -45,10 +45,8 @@ class PasswordGrantVerifier
         break;
     }
 
-    if (\Hash::check($password, $user->password)) {
-
+    if ((\Hash::check($password, $user->password)) || (\Hash::check($password, $user->temporary_password)))
       return $user->id;
-    }
     
     return false;
   }

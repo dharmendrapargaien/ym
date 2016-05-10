@@ -7,7 +7,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Seller extends Authenticatable
 {
-    use PimpableTtaiy;
     use SoftDeletes;
 
 	/**

@@ -70,9 +70,9 @@ class RouteServiceProvider extends ServiceProvider
             });
 
             $router->group(['namespace' => 'Buyer', 'prefix' => 'buyer'], function ($router) {
-            
+           
                 $router->group(['namespace' => 'V1', 'prefix' => 'v1'], function ($router) {
-            
+                       
                     require app_path('Http/Routes/Api/Buyers/routes.v1.php');
                 });
             });

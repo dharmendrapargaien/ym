@@ -63,8 +63,8 @@ class AuthController extends BaseController
 	{
 		\DB::beginTransaction();
 
-		$email = $request->email;
-		$seller  = $this->sellerModel->whereEmail($email)->first();
+		$email  = $request->email;
+		$seller = $this->sellerModel->whereEmail($email)->first();
 
 		$this->sendTemporaryPassword($seller);
 
@@ -85,9 +85,9 @@ class AuthController extends BaseController
 		$chars    = "abcdefghjkmnpqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789!@#&";
 		$password = substr( str_shuffle( $chars ), 0, 6 );
 
-		$seller->temporary_password = $password;
+		$seller->temporary_password = bcrypt($password);
 		$seller->save();
-
+		$seller->temporary_password = $password;
     	return Mail::send('auth.emails.api.v1.seller.temporary_password', ['seller' => $seller], function ($m) use ($seller) {
     		$m->to($seller->email, $seller->name)->subject('Test Api Password');
     	});

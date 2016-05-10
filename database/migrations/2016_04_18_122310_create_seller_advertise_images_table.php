@@ -3,7 +3,7 @@
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSellerBusinessAdvertiseImagesTable extends Migration
+class CreateSellerAdvertiseImagesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,9 +13,9 @@ class CreateSellerBusinessAdvertiseImagesTable extends Migration
     public function up()
     {
 
-        Schema::create('seller_business_advertise_images', function(Blueprint $table){
+        Schema::create('seller_advertise_images', function(Blueprint $table){
             
-            $table->increment('id');
+            $table->increments('id');
 
             $table->integer('seller_business_advertise_id')->unsigned();
             $table->foreign('seller_business_advertise_id')->references('id')->on('seller_business_advertises');
@@ -37,6 +37,6 @@ class CreateSellerBusinessAdvertiseImagesTable extends Migration
     public function down()
     {
 
-        Schema::drop('seller_business_advertise_images');
+        Schema::drop('seller_advertise_images');
     }
 }

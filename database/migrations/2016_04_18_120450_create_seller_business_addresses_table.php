@@ -13,9 +13,10 @@ class CreateSellerBusinessAddressesTable extends Migration
     public function up()
     {
 
-        Schema::create('seller_business_addresses', function(Blueprint $table){
+        Schema::create('seller_business_addresses', function (Blueprint $table)
+        {
             
-            $table->increment('id');
+            $table->increments('id');
 
             $table->integer('seller_business_id')->unsigned();
             $table->foreign('seller_business_id')->references('id')->on('seller_businesses');
@@ -27,8 +28,8 @@ class CreateSellerBusinessAddressesTable extends Migration
             $table->integer('country_id')->nullable();
             $table->integer('zip_code')->nullable();
             
-            $tavle->double('lat', 21, 8)->nullable();
-            $tavle->double('long', 21, 8)->nullable();
+            $table->double('lat', 21, 8)->nullable();
+            $table->double('long', 21, 8)->nullable();
 
             $table->tinyInteger('status')->default(1);//default user business is activated
             
