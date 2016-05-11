@@ -44,9 +44,9 @@ class AuthController extends BaseController
 		$seller     = $this->sellerModel->getSellerData($request->input('email'));
 		
 		//add seller data 
-		$authorizer['id'] = $seller['id'];
-		$authorizer['email']   = $seller['email'];
-		$authorizer['name']    = $seller['name'];
+		$authorizer['id']    = $seller['id'];
+		$authorizer['email'] = $seller['email'];
+		$authorizer['name']  = $seller['name'];
 
 		// We have an access token. Now we need to return that.
         $resource = new \App\Fractal\Item($authorizer, new AuthenticateTransformer);
@@ -102,14 +102,19 @@ class AuthController extends BaseController
 	{
 		\DB::beginTransaction();
 
-		$request_data = $request->all();
-
-		$request_data['email']    = trim($request->email);
-		$request_data['password'] = bcrypt(trim($request->password));
-		$request_data['phone_no'] = trim($request->phone_no);
-		$request_data['name']     = trim($request->get('name'));
+		$request_data = [
+			'email'    => trim($request->email),
+			'password' => bcrypt(trim($request->password)),
+			'phone_no' => trim($request->phone_no),
+			'name'     => trim($request->get('name')),
+			'gender'   => $request->get('gender'),
+		];
 		
 		$seller = $this->sellerModel->create($request_data);
+		//store seller business types
+		$seller->businesses()->attach($request->get('business'), ["business_order" => 1, 'created_at' => \Carbon\Carbon::now()->toDateTimeString(),
+            'updated_at' => \Carbon\Carbon::now()->toDateTimeString()]);
+		
 		$this->sendActivationCode($seller);
 
 		\DB::commit();
@@ -127,7 +132,7 @@ class AuthController extends BaseController
 	private function sendActivationCode($seller)
 	{
 
-		$confirmation_code = mt_rand(100000, 999999);
+		$confirmation_code         = mt_rand(100000, 999999);
 		$seller->confirmation_code = $confirmation_code;
 		$seller->save();
 

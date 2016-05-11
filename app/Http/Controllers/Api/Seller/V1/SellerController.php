@@ -41,4 +41,6 @@ class SellerController extends BaseController
 
 		return $this->response->withItem($seller, new UserTransformer);
 	}
+
+	
 }

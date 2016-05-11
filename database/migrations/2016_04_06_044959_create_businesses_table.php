@@ -16,7 +16,7 @@ class CreateBusinessesTable extends Migration
             $table->increments('id');
             $table->string('title')->unique();
             $table->string('business_code')->unique()->nullable();
-            $table->integer('user_type')->nullable();
+            $table->char('user_type',1)->default('u');
             $table->integer('added_by')->nullable();
             $table->tinyInteger('status')->default(1);//default every created business is activated
             $table->softDeletes();

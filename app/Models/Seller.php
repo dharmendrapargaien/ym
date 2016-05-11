@@ -38,7 +38,7 @@ class Seller extends Authenticatable
     public function businesses()
     {
 
-        return $this->belongsToMany('App\Business');
+        return $this->belongsToMany('App\Models\Business', 'seller_businesses');
     }
 
     /**

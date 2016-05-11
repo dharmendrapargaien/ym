@@ -21,6 +21,8 @@ Route::post('access_token', function() {
 	return response()->json(Authorizer::issueAccessToken());
 });
 
-Route::group(['middleware' => ['userAccess']], function () {
+Route::get('business-list', 'BaseController@businessLists');
+
+Route::group(['middleware' => ['oauth', 'userAccess']], function () {
 
 });

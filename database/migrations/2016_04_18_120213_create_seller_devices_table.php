@@ -22,7 +22,7 @@ class CreateSellerDevicesTable extends Migration
             $table->tinyInteger('device_type');
             $table->string('reg_id');
 
-            $table->tinyInteger('status');
+            $table->tinyInteger('status')->default(1);
 
             $table->timestamps();
         });

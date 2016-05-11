@@ -26,6 +26,7 @@ class CreateSellerBusinessesTable extends Migration
             $table->string('description')->nullable();
             $table->string('business_logo')->nullable();
             $table->tinyInteger('status')->default(1);//default user business is activated
+            $table->tinyInteger('business_order')->default(0);//default user business is activated
             
             $table->softDeletes();
             $table->timestamps();
