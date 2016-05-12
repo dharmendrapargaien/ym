@@ -24,6 +24,8 @@ class CreateSellerAdvertiseImagesTable extends Migration
             $table->string('url', 255)->nullable();
             
             $table->integer('image_order')->default(1);//default there is no type
+
+            $table->tinyInteger('featured_image')->default(0);
             $table->tinyInteger('status')->default(0);//default advertise is not approved
             $table->timestamps();
         });

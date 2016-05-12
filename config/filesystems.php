@@ -56,12 +56,20 @@ return [
 
         's3' => [
             'driver' => 's3',
-            'key' => 'your-key',
+            'key'    => 'your-key',
             'secret' => 'your-secret',
             'region' => 'your-region',
             'bucket' => 'your-bucket',
         ],
+        'avatars' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/uploads/avatars/'
+        ]
 
+        'advetise' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/uploads/advetise/'
+        ]
     ],
 
 ];

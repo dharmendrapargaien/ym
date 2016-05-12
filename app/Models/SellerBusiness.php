@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class SellerBusiness extends Model
 {
-    use PimpableTtaiy;
+    
     use SoftDeletes;
 
     /**
@@ -23,4 +23,22 @@ class SellerBusiness extends Model
      * @var array
      */
 	protected $dates = ['deleted_at', 'created_at', 'updated_at'];
+
+    /**
+     * one seller have multiple business
+     * @return [type] [description]
+     */
+    public function business()
+    {
+        return $this->belongsTo('App\Models\Business');
+    }
+
+    /**
+     * seler's one business have multiple adverise
+     * @return [type] [description]
+     */
+    public function advertises()
+    {
+        return $this->hasMany('App\Models\SellerBusinessAdvertise');
+    }
 }

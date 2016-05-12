@@ -10,7 +10,6 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
 Route::post('authenticate', 'AuthController@authenticate');
 Route::post('signup', 'AuthController@signup');
 Route::post('forgot-password', 'AuthController@forgotPassword');
@@ -25,4 +24,5 @@ Route::get('business-list', 'BaseController@businessLists');
 
 Route::group(['middleware' => ['oauth', 'userAccess']], function () {
 
+	Route::resource('{seller}/advertises','AdvertiseController');
 });

@@ -15,8 +15,12 @@ class UserAccess
      */
     public function handle($request, Closure $next)
     {
+        
+        //get service for
+        $check_user_id = \Request::segment(4);
+
         //if request does not have uesr id
-        if(!$request->has('user_id')) {
+        if(!is_numeric($check_user_id)) {
 
             return \Response::json(['status' => 'fail'], 400);
         } 
@@ -30,7 +34,7 @@ class UserAccess
         $user_id    = $oauthSessions->whereId($session_id)->first()->owner_id;
 
         //if access token do not match the un authorizing
-        if($user_id != $request->get('user_id'))
+        if($user_id != $check_user_id)
             return \Response::json(['status' => 'fail'], 401);
 
         return $next($request);
