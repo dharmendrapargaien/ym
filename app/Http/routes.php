@@ -10,8 +10,3 @@
 | and give it the controller to call when that URI is requested.
 |
 */
-
-Route::group(['middleware' => ['web', 'auth'], 'namespace' => 'Seller', 'prefix' => 'seller'], function () {
-
-	Route::get('sellers', ['as' => 'sellers.index', 'uses' => 'SellerController@index']);
-});

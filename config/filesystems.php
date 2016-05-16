@@ -64,8 +64,7 @@ return [
         'avatars' => [
             'driver' => 'local',
             'root'   => public_path() . '/uploads/avatars/'
-        ]
-
+        ],
         'advetise' => [
             'driver' => 'local',
             'root'   => public_path() . '/uploads/advetise/'
