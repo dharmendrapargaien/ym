@@ -34,11 +34,12 @@
             <div class="col-xs-12">
                 <label>
                         <input type="radio" name="check_user" class="user-type" value="buyer" checked="true" > B
-                        <input type="radio" name="check_user" class="user-type" value="seller" > S
-                    </label>
+                        <input type="radio" name="check_user" class="user-type" value="seller" "{{ (old('check_user') == 'seller') ? ' checked="true"' : ""  }}" > S
+                </label>
             </div><!-- /.col -->
            
         </div>
+        
         <div class="form-group has-feedback">
             <input type="email" class="form-control" placeholder="Email" name="email"/>
             <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
@@ -58,6 +59,7 @@
             <div class="col-xs-4">
                 <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
             </div><!-- /.col -->
+
         </div>
     </form>
 
@@ -71,9 +73,19 @@
 </div><!-- /.login-box -->
 
     @include('layouts.partials.scripts_auth')
+
     <script>
         $(function () {
-            
+            //check for current url
+            var currentUrl = window.location.href;
+            if (currentUrl.indexOf('seller') !== -1 || $("input[name=check_user][value='seller']").prop('checked') == true) {
+
+                $("input[name=check_user][value='seller']").prop("checked",true);
+                setLinks($("form input[type='radio']:checked"));
+            }
+
+
+
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
@@ -84,12 +96,8 @@
                 setLinks(this);
             });
 
-            // if($('.user-type').val() == 'seller'){
-                
-            //     $('form').attr('action', "{{ url('seller/login')}}" );
-            //     $('.social-auth-links').addClass('hide');
-            // }
         });
+
 
         //set links 
         function setLinks(radioInput) {
@@ -111,11 +119,8 @@
                     
                     $('.social-auth-links').removeClass('hide');
                 }
-                console.log($('form').attr('action'));
             }
         }
-
-
     </script>
 </body>
 

@@ -112,10 +112,9 @@ return [
         ],
         'sellers' => [
             'provider' => 'sellers',
-            'email' => 'auth.emails.password',
-            'table' => 'password_resets',
-            'expire' => 60,
+            'email'    => 'auth.emails.seller.password',
+            'table'    => 'seller_password_resets',
+            'expire'   => 60,
         ],
     ],
-
 ];

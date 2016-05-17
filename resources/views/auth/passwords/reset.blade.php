@@ -60,22 +60,31 @@
                 </div>
             </form>
 
-            <a href="{{ url('/login') }}">Log in</a><br>
-            <a href="{{ url('/register') }}" class="text-center">Register a new membership</a>
+            <a href="{{ url('login') }}" class="login">Log in</a><br>
+            <a href="{{ url('register') }}" class="text-center sign-up">Register a new membership</a>
 
         </div><!-- /.login-box-body -->
 
     </div><!-- /.login-box -->
 
     @include('layouts.partials.scripts_auth')
-
     <script>
         $(function () {
+            
             $('input').iCheck({
                 checkboxClass: 'icheckbox_square-blue',
                 radioClass: 'iradio_square-blue',
                 increaseArea: '20%' // optional
             });
+
+           //check for current url
+            var currentUrl = window.location.href;
+            if (currentUrl.indexOf('seller') !== -1) {
+
+                $('form').attr('action', "{{ url('seller/password/reset')}}" );
+                $('.login').attr('href', "{{ url('seller/login')}}");
+                $('.sign-up').attr('href', " {{ url('seller/register') }}");
+            }
         });
     </script>
     </body>
